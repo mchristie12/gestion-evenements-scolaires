@@ -1,7 +1,14 @@
-// 1. On importe la base de donnee et le DataTypes
-import database from "../config/connection.js";
+import database from "../config/Connection.js";
 import { DataTypes } from "sequelize";
 
-// 2. On cree le model "Utilisateur" dans la base de donnees avec ses attributs
+const Utilisateur = database.define('Utilisateur', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    nom: { type: DataTypes.STRING, allowNull: false },
+    prenom: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    motDePasse: { type: DataTypes.STRING, allowNull: false },
+}, {
+    tableName: 'utilisateurs', // Définit le nom de la table
+});
 
-// 3. On exporte le model "Utilisateur" pour lui creer un controller
+export default Utilisateur;

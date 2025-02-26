@@ -5,10 +5,15 @@ import compression from "compression"; // réduire la taille des réponses et op
 import helmet from "helmet"; // renforcer la sécurité en ajoutant divers en-têtes HTTP
 import cors from "cors"; // permettre ou restreindre les requêtes provenant d'autres domaines
 import dotenv from "dotenv"; // charger les variables d'environnement depuis un fichier .env
+// importer la connection de la base de données
 import database from "./config/connection.js";
 
 // 2. On importe la configuration de connexion à la base de données
 import connection from "./config/connection.js";
+
+import inscriptionRoute from "./routes/InscriptionRoute.js";
+
+
 
 // 3. On teste la connexion a la base de donnees
 const testDatabaseConnection = async () => {
@@ -20,9 +25,18 @@ const testDatabaseConnection = async () => {
   }
 };
 
+//database.sync({ alter: true })
+
 // 5. On cree un server
 const app = express();
 app.use(express.json());
+
+
+app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // 9. On demarre le server avec le numero de port importe depuis le fichier de config (.env)
 const PORT = dotenv.config().parsed.PORT;
@@ -31,3 +45,6 @@ app.listen(PORT, () => {
   console.info("Serveur démarré:");
   console.info("http://localhost:" + PORT);
 });
+
+// Les Routes
+app.use("/api/inscriptions", inscriptionRoute);

@@ -1,33 +1,67 @@
 // 1. On importe les modules installes
-import express from "express"; // créer et gérer le serveur HTTP
-import bodyParser from "body-parser"; // interpréter les données JSON et les formulaires
-import compression from "compression"; // réduire la taille des réponses et optimiser les performances
-import helmet from "helmet"; // renforcer la sécurité en ajoutant divers en-têtes HTTP
-import cors from "cors"; // permettre ou restreindre les requêtes provenant d'autres domaines
-import dotenv from "dotenv"; // charger les variables d'environnement depuis un fichier .env
+
+// 1. Importation des modules
+import express from "express";
+import bodyParser from "body-parser";
+import compression from "compression";
+import helmet from "helmet";
+import cors from "cors";
+import dotenv from "dotenv";
+
+// Importer la connexion à la base de données
 import database from "./config/connection.js";
 
-// 2. On importe la configuration de connexion à la base de données
 import connection from "./config/connection.js";
 
-// 3. On teste la connexion a la base de donnees
+
+// Importer les routes utilisateur
+import UtilisateurRoute from "./routes/UtilisateurRoute.js";
+
+// 2. Charger les variables d'environnement
+//dotenv.config();
+
+// 3. Tester la connexion à la base de données
 const testDatabaseConnection = async () => {
   try {
-    await connection.authenticate();
-    console.log("Connection has been established successfully.");
+    await database.authenticate();
+    console.log("Connexion à la base de données réussie.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error.message);
+    console.error("Erreur de connexion à la base de données:", error.message);
   }
 };
 
-// 5. On cree un server
+database.sync({ alter: true });
+
+// 4. Création du serveur
 const app = express();
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(compression());
+app.use(helmet());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// 9. On demarre le server avec le numero de port importe depuis le fichier de config (.env)
+// 5. Utilisation des routes
+app.use("/api/utilisateur", UtilisateurRoute);
+
+// 6. Démarrage du serveur
+//const PORT = process.env.PORT || 3000;
+//testDatabaseConnection();
+
+//app.listen(PORT, () => {
+ // console.info("Serveur démarré:");
+ // console.info("http://localhost:" + PORT);
+//});
+
+app.use("/api/utilisateur", UtilisateurRoute);
+
+
 const PORT = dotenv.config().parsed.PORT;
 testDatabaseConnection();
 app.listen(PORT, () => {
   console.info("Serveur démarré:");
   console.info("http://localhost:" + PORT);
 });
+
+
+

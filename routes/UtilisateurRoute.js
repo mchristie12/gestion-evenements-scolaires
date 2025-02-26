@@ -1,9 +1,16 @@
 import { Router } from "express";
+import { createUtilisateur, getAllUtilisateurs, getUtilisateurById } from "../controllers/UtilisateurCTRL.js";
+import utilisateurValidation from "../validations/UtilisateurValidation.js";
 
-// 2. On cree le router "UtilisateurRoute"
 const UtilisateurRoute = Router();
 
-// 3. On ecris les routes pour les controlleurs de "Utilisateur"
+// Route pour créer un utilisateur
+UtilisateurRoute.post("/", createUtilisateur);
 
-// 4. On export la route "UtilisateurRoute"
+// Route pour récupérer tous les utilisateurs
+UtilisateurRoute.get("/", getAllUtilisateurs);
+
+// Route pour récupérer un utilisateur spécifique par son ID
+UtilisateurRoute.get("/:id", getUtilisateurById);
+
 export default UtilisateurRoute;

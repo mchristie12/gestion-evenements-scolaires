@@ -1,9 +1,22 @@
+
+
+//export default FeedbacksRoute;
 import { Router } from "express";
+import { createFeedback, getAllFeedbacks, getFeedbackById } from "../controllers/FeedbacksCTRL.js"; // Importation des contrôleurs
+import {validateCreateFeedback, validateFeedbackId} from "../validations/FeedbacksValidation.js";
+// 2. On crée le router "FeedbacksRoute"
+const feedbacksRoute = Router();
 
-// 2. On cree le router "FeedbacksRoute"
-const FeedbacksRoute = Router();
+// 3. On écrit les routes pour les contrôleurs de "Feedback"
 
-// 3. On ecris les routes pour les controlleurs de "Feedback"
+// Route pour créer un feedback
+feedbacksRoute.post('/', validateCreateFeedback, createFeedback);
 
-// 4. On export la route "FeedbacksRoute"
-export default FeedbacksRoute;
+// Route pour récupérer tous les feedbacks
+feedbacksRoute.get('/', getAllFeedbacks);
+
+// Route pour récupérer un feedback spécifique par son ID
+feedbacksRoute.get('/:id', validateFeedbackId, getFeedbackById);
+
+// 4. On exporte la route "FeedbacksRoute"
+export default feedbacksRoute;

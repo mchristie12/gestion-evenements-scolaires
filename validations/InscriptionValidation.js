@@ -55,5 +55,5 @@ export const validateGetHistorique = [
         .isInt().withMessage("L'ID de l'utilisateur doit être un nombre entier")
 ];
 // on a ajouter
-export default InscriptionValidation;
+//export default inscriptionValidation;
 

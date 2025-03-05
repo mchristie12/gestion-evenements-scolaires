@@ -1,9 +1,31 @@
+//import { Router } from "express";
 import { Router } from "express";
+import { 
+    getNotifications, 
+    getNotificationsByUser, 
+    createNotification, 
+    markAsRead, 
+    deleteNotification 
+} from "../controllers/NotificationCTRL.js";
+import NotificationValidation from "../validations/NotificationValidation.js";
 
-// 2. On cree le router "NotificationRoute"
+// 1. On crée le router "NotificationRoute"
 const NotificationRoute = Router();
 
-// 3. On ecris les routes pour les controlleurs de "Notification"
+// 2. Récupérer toutes les notifications
+NotificationRoute.get("/", getNotifications);
 
-// 4. On export la route "NotificationRoute"
+// 3. Récupérer les notifications d'un utilisateur
+NotificationRoute.get("/user/:utilisateur_id", getNotificationsByUser);
+
+// 4. Créer une notification avec validation
+NotificationRoute.post("/", NotificationValidation, createNotification);
+
+// 5. Marquer une notification comme lue
+NotificationRoute.put("/:id/read", markAsRead);
+
+// 6. Supprimer une notification
+NotificationRoute.delete("/:id", deleteNotification);
+
+// 7. On exporte la route "NotificationRoute"
 export default NotificationRoute;

@@ -1,7 +1,11 @@
 // 1. On importe l'entite/model "Inscription"
-import Inscription from "../models/Inscription.js";
-import Utilisateur from "../models/Utilisateur.js";
-import Evenement from "../models/Evenement.js";
+//import Inscription from "../models/Inscription.js";
+import { Inscription } from "../models/Relation.js";
+import { Utilisateur } from "../models/Relation.js";
+import { Evenement } from "../models/Relation.js";
+//import Utilisateur from "../models/Utilisateur.js";
+//import Evenement from "../models/Evenement.js";
+
 
 //  Créer une nouvelle inscription
 export const creerInscription = async (req, res) => {
@@ -128,3 +132,4 @@ export const obtenirHistoriqueInscriptions = async (req, res) => {
         res.status(500).json({ message: "Erreur lors de la récupération de l'historique", error: error.message });
     }
 };
+

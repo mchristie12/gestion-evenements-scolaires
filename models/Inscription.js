@@ -1,3 +1,4 @@
+
 // 1. Importation de la base de données et des types de données Sequelize
 import database from "../config/connection.js";
 import { DataTypes } from "sequelize";
@@ -12,7 +13,7 @@ const Inscription = database.define('Inscription', {
         autoIncrement: true 
     },
 
-    /* utilisateur_id: { 
+utilisateur_id: { 
         type: DataTypes.INTEGER, 
         allowNull: false, 
         references: {
@@ -21,8 +22,9 @@ const Inscription = database.define('Inscription', {
         },
         onDelete: 'CASCADE'
     },
+    
 
-    /*evenement_id: { 
+    evenement_id: { 
         type: DataTypes.INTEGER, 
         allowNull: false, 
         references: {
@@ -31,7 +33,7 @@ const Inscription = database.define('Inscription', {
         },
         onDelete: 'CASCADE'
     },
-    */
+    
 
     date_inscription: { 
         type: DataTypes.DATE, 

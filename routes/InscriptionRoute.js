@@ -1,3 +1,4 @@
+
 // Importation des dépendances
 import { Router } from "express";
 import {
@@ -16,6 +17,8 @@ import {
     validateDeleteInscription,
     validateGetHistorique
 } from "../validations/InscriptionValidation.js";
+
+
 
 // Création du routeur "InscriptionRoute"
 const inscriptionRoute = Router();

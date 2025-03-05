@@ -1,10 +1,10 @@
 
-import Utilisateur from "./Utilisateur.js";
 import Evenement from "./Evenement.js";
 import Inscription from "./Inscription.js";
 import Notification from "./Notification.js";
-import Feedback from "./Feedback.js";
-import HistoriqueRecherches from "./HistoriqueRecherches.js";
+import Feedbacks from "./Feedbacks.js";
+//import HistoriqueRecherches from "./HistoriqueRecherches.js";
+import Utilisateur from "./Utilisateur.js";
 
 // Utilisateur et Inscription (1 utilisateur peut avoir plusieurs inscriptions)
 Utilisateur.hasMany(Inscription, { foreignKey: "utilisateur_id", as: "inscriptions" });
@@ -19,24 +19,26 @@ Utilisateur.hasMany(Evenement, { foreignKey: "organisateur_id", as: "evenements_
 Evenement.belongsTo(Utilisateur, { foreignKey: "organisateur_id", as: "organisateur" });
 
 //  Événement et Feedback (1 événement peut recevoir plusieurs avis)
-Evenement.hasMany(Feedback, { foreignKey: "evenement_id", as: "feedbacks" });
-Feedback.belongsTo(Evenement, { foreignKey: "evenement_id", as: "evenement" });
+Evenement.hasMany(Feedbacks, { foreignKey: "evenement_id", as: "feedbacks" });
+Feedbacks.belongsTo(Evenement, { foreignKey: "evenement_id", as: "evenement" });
 
 //  Utilisateur et Feedback (1 utilisateur peut donner plusieurs avis)
-Utilisateur.hasMany(Feedback, { foreignKey: "utilisateur_id", as: "feedbacks" });
-Feedback.belongsTo(Utilisateur, { foreignKey: "utilisateur_id", as: "participant" });
+Utilisateur.hasMany(Feedbacks, { foreignKey: "utilisateur_id", as: "feedbacks" });
+Feedbacks.belongsTo(Utilisateur, { foreignKey: "utilisateur_id", as: "participant" });
 
 //  Utilisateur et Notifications (1 utilisateur peut recevoir plusieurs notifications)
 Utilisateur.hasMany(Notification, { foreignKey: "utilisateur_id", as: "notifications" });
 Notification.belongsTo(Utilisateur, { foreignKey: "utilisateur_id", as: "destinataire" });
 
 //  Utilisateur et Historique des Recherches (1 utilisateur peut faire plusieurs recherches)
-Utilisateur.hasMany(HistoriqueRecherches, { foreignKey: "utilisateur_id", as: "recherches" });
-HistoriqueRecherches.belongsTo(Utilisateur, { foreignKey: "utilisateur_id", as: "utilisateur" });
+//Utilisateur.hasMany(HistoriqueRecherches, { foreignKey: "utilisateur_id", as: "recherches" });
+//HistoriqueRecherches.belongsTo(Utilisateur, { foreignKey: "utilisateur_id", as: "utilisateur" });
 
 //  Événement et Historique des Recherches (1 événement peut être recherché plusieurs fois)
-Evenement.hasMany(HistoriqueRecherches, { foreignKey: "evenement_id", as: "recherches" });
-HistoriqueRecherches.belongsTo(Evenement, { foreignKey: "evenement_id", as: "evenement" });
+//Evenement.hasMany(HistoriqueRecherches, { foreignKey: "evenement_id", as: "recherches" });
+//HistoriqueRecherches.belongsTo(Evenement, { foreignKey: "evenement_id", as: "evenement" });
 
 // Exportation des modèles pour utilisation ailleurs dans l’application
-export { Utilisateur, Evenement, Inscription, Notification, Feedback, HistoriqueRecherches };
+export {Evenement, Inscription,Utilisateur,Notification, Feedbacks};
+
+// Utilisateur,Notification, Feedbacks

@@ -37,11 +37,16 @@ export const addEvenement = async (req, res) => {
  
     // 2️⃣ Vérifier si l'utilisateur est bien un organisateur
 
-    if (organisateur.role !== "organisateur") {
+    /*if (organisateur.role !== "organisateur") {
 
       return res.status(403).json({ message: "Seuls les organisateurs peuvent créer un événement." });
 
     }
+    */
+    if (organisateur.role.toLowerCase() !== "organisateur") {
+    return res.status(403).json({ message: "Seuls les organisateurs peuvent créer un événement." });
+    }
+
  
     // 3️⃣ Créer l'événement après les vérifications
 

@@ -1,4 +1,3 @@
-
 // 1. On importe les modules installes
 import express from "express"; // créer et gérer le serveur HTTP
 import bodyParser from "body-parser"; // interpréter les données JSON et les formulaires
@@ -16,11 +15,11 @@ import connection from "./config/connection.js";
 
 // 2. On importe toutes les routes
 import inscriptionRoute from "./routes/InscriptionRoute.js";
-import utilisateurRoute from "./routes/UtilisateurRoute.js";  // Route des utilisateurs
-import evenementRoute from "./routes/EvenementRoute.js";  // Route des événements
-import feedbacksRoute from "./routes/FeedbacksRoute.js";  // Route des feedbacks
-import notificationRoute from "./routes/NotificationRoute.js";  // Route des notifications
-
+import utilisateurRoute from "./routes/UtilisateurRoute.js"; // Route des utilisateurs
+import evenementRoute from "./routes/EvenementRoute.js"; // Route des événements
+import feedbacksRoute from "./routes/FeedbacksRoute.js"; // Route des feedbacks
+import notificationRoute from "./routes/NotificationRoute.js"; // Route des notifications
+import authRoute from "./routes/AuthRoute.js";
 
 // 3. On teste la connexion a la base de donnees
 const testDatabaseConnection = async () => {
@@ -32,14 +31,22 @@ const testDatabaseConnection = async () => {
   }
 };
 
-//database.sync({ alter: true })
+//database.sync({ alter: true });
 
 // 5. On cree un server
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(helmet());
 app.use(compression());
+app.use(bodyParser.json());
 
 // 9. On demarre le server avec le numero de port importe depuis le fichier de config (.env)
 const PORT = dotenv.config().parsed.PORT;
@@ -51,13 +58,12 @@ app.listen(PORT, () => {
 
 // Définition des routes
 //app.use("/api/inscriptions", inscriptionRoute);
-app.use("/api/utilisateurs", utilisateurRoute);  // Routes pour les utilisateurs
-app.use("/api/evenements", evenementRoute);  // Routes pour les événements
-app.use("/api/inscriptions", inscriptionRoute);  // Routes pour les inscriptions
-app.use("/api/feedbacks", feedbacksRoute);  // Routes pour les feedbacks
-app.use("/api/notifications", notificationRoute);  // Routes pour les notifications
-
-
+app.use("/api/utilisateurs", utilisateurRoute); // Routes pour les utilisateurs
+app.use("/api/evenements", evenementRoute); // Routes pour les événements
+app.use("/api/inscriptions", inscriptionRoute); // Routes pour les inscriptions
+app.use("/api/feedbacks", feedbacksRoute); // Routes pour les feedbacks
+app.use("/api/notifications", notificationRoute); // Routes pour les notifications
+app.use("/api/auth", authRoute);
 app.get("/generateQR", async (req, res) => {
   try {
     const text = req.query.text || "https://example.com"; // Récupérer le texte depuis la requête
@@ -67,4 +73,3 @@ app.get("/generateQR", async (req, res) => {
     res.status(500).send("Erreur lors de la génération du QR Code");
   }
 });
-
